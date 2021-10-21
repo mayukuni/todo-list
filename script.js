@@ -75,6 +75,8 @@ function removeFinishedItems() {
 }
 removeButton.addEventListener('click', removeFinishedItems);
 
+// 12
+// link de referência: https://stackoverflow.com/questions/58422340/trying-to-save-all-generated-li-elements-to-local-storage-using-javascript
 const saveTasksButton = document.getElementById('salvar-tarefas');
 function saveTasks() {
   const taskList = [];
@@ -103,3 +105,24 @@ function loadTaskList() {
 }
 
 loadTaskList();
+
+// 13
+// requisito feito com base no código do colega Lucas Teixeira.
+const upButton = document.getElementById('mover-cima');
+const downButton = document.getElementById('mover-baixo');
+
+function moveToUp() {
+  const selectedItem = document.getElementsByClassName('selected')[0];
+  if (selectedItem !== list.firstChild && selectedItem) {
+    selectedItem.previousSibling.before(selectedItem);
+  }
+}
+upButton.addEventListener('click', moveToUp);
+
+function moveToDown() {
+  const selectedItem = document.getElementsByClassName('selected')[0];
+  if (selectedItem !== list.lastChild && selectedItem) {
+    selectedItem.nextSibling.after(selectedItem);
+  }
+}
+downButton.addEventListener('click', moveToDown);

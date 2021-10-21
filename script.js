@@ -1,4 +1,5 @@
 const list = document.getElementById('lista-tarefas'); // ol
+const li = document.getElementsByTagName('li');
 
 // 5 e 6
 const button = document.getElementById('criar-tarefa');
@@ -14,7 +15,6 @@ button.addEventListener('click', addTask);
 
 // 7 e 8
 function removeSelectedClass() {
-  const li = document.getElementsByTagName('li');
   for (let index = 0; index < li.length; index += 1) {
     if (li[index].classList.contains('selected')) {
       li[index].classList.remove('selected');
@@ -31,7 +31,6 @@ list.addEventListener('click', changeSelectedClass);
 
 function changeColor() {
   const grayColor = 'rgb(128,128,128)';
-  const li = document.getElementsByTagName('li');
   for (let index = 0; index < li.length; index += 1) {
     if (li[index].classList.contains('selected')) {
       li[index].style.backgroundColor = grayColor;
@@ -46,7 +45,6 @@ list.addEventListener('click', changeColor);
 function addCompletedClass(event) {
   const clickedLi = event.target;
   clickedLi.classList.toggle('completed');
-  const li = document.getElementsByTagName('li');
 }
 list.addEventListener('dblclick', addCompletedClass);
 
@@ -76,3 +74,32 @@ function removeFinishedItems() {
   }
 }
 removeButton.addEventListener('click', removeFinishedItems);
+
+const saveTasksButton = document.getElementById('salvar-tarefas');
+function saveTasks() {
+  const taskList = [];
+  const className = [];
+  for (let index = 0; index < li.length; index += 1) {
+    taskList.push(li[index].innerHTML);
+    className.push(li[index].className);
+  }
+  localStorage.setItem('taskList', JSON.stringify(taskList));
+  localStorage.setItem('className', JSON.stringify(className));
+}
+saveTasksButton.addEventListener('click', saveTasks);
+
+function loadTaskList() {
+  const savedTasks = JSON.parse(localStorage.getItem('taskList'));
+  const savedClass = JSON.parse(localStorage.getItem('className'));
+  console.log(savedTasks);
+  if (savedTasks) {
+    for (let index = 0; index < savedTasks.length; index += 1) {
+      const liValue = document.createElement('li');
+      liValue.className = savedClass[index];
+      liValue.innerHTML = savedTasks[index];
+      list.appendChild(liValue);
+    }
+  }
+}
+
+loadTaskList();

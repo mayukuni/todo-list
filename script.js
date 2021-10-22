@@ -126,3 +126,12 @@ function moveToDown() {
   }
 }
 downButton.addEventListener('click', moveToDown);
+
+// 14
+const removeSelectedButton = document.getElementById('remover-selecionado');
+
+function removeSelected() {
+  const selectedItem = document.getElementsByClassName('selected')[0];
+  selectedItem.remove();
+}
+removeSelectedButton.addEventListener('click', removeSelected);
